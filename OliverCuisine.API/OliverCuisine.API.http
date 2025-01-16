@@ -1,0 +1,6 @@
+@OliverCuisine.API_HostAddress = http://localhost:5208
+
+GET {{OliverCuisine.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
