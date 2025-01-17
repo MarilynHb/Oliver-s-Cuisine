@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OliverCuisine.Core.Interfaces;
 using OliverCuisine.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddDbContext<StoreDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 
 var app = builder.Build();
 
@@ -20,4 +22,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+try
+{
+    var context = app.Services.GetRequiredService<StoreDbContext>();
+    context.Database.Migrate();
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+    throw;
+}
 app.Run();
