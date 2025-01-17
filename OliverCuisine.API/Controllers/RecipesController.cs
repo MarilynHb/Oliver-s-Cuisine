@@ -12,8 +12,8 @@ namespace OliverCuisine.API.Controllers;
 public class RecipesController : ControllerBase
 {
     #region  Controller
-    private IRecipeRepository repository { get; }
-    public RecipesController(IRecipeRepository repository)
+    private IGenericRepository<Recipe> repository { get; }
+    public RecipesController(IGenericRepository<Recipe> repository)
     {
         this.repository = repository;
     }
@@ -22,13 +22,13 @@ public class RecipesController : ControllerBase
     [HttpGet]   
     public async Task<ActionResult<IReadOnlyList<Recipe>>> GetRecipes()
     {
-        return Ok(await repository.GetRecipesAsync());
+        return Ok(await repository.ListAllAsync());
     }
 
     [HttpGet("{id:long}")]
     public async Task<ActionResult<Recipe>> GetRecipe(long id)
     {
-        var recipe = await repository.GetRecipeByIdAsync(id);
+        var recipe = await repository.GetByIdAsync(id);
         if (recipe == null)
         {
             return NotFound();
@@ -39,8 +39,8 @@ public class RecipesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Recipe>> CreateRecipe([FromBody]Recipe recipe)
     {
-        repository.AddRecipe(recipe);
-        if(await repository.SaveChangesAsync())
+        repository.Add(recipe);
+        if(await repository.SaveAllAsync())
         {
             return CreatedAtAction(nameof(GetRecipe), new { id = recipe.Id }, recipe);
         }
@@ -54,8 +54,8 @@ public class RecipesController : ControllerBase
         {
             return BadRequest("Cannot update this recipe");
         }
-        repository.UpdateRecipe(recipe);
-        if (await repository.SaveChangesAsync())
+        repository.Update(recipe);
+        if (await repository.SaveAllAsync())
         {
             return NoContent();
         }
@@ -64,19 +64,19 @@ public class RecipesController : ControllerBase
 
     bool RecipeExists(long id)
     {
-        return repository.RecipeExists(id);
+        return repository.Exists(id);
     }
 
     [HttpDelete("{id:long}")]
     public async Task<ActionResult> DeleteRecipe(long id)
     {
-        var recipe = await repository.GetRecipeByIdAsync(id);
+        var recipe = await repository.GetByIdAsync(id);
         if (recipe == null)
         {
             return NotFound();
         }
-        repository.DeleteRecipe(recipe);
-        if (await repository.SaveChangesAsync())
+        repository.Delete(recipe);
+        if (await repository.SaveAllAsync())
         {
             return NoContent();
         }
