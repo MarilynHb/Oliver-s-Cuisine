@@ -2,20 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OliverCuisine.Infrastructure.Data;
+using OliverCuisine.Core.Data;
 
 #nullable disable
 
-namespace OliverCuisine.Infrastructure.Migrations
+namespace OliverCuisine.Core.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20250114192838_Initial")]
-    partial class Initial
+    partial class StoreDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

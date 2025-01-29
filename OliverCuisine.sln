@@ -7,15 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OliverCuisine.API", "Oliver
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OliverCuisine.Core", "OliverCuisine.Core\OliverCuisine.Core.csproj", "{3123C6C0-46EE-493F-8C12-C5871C40BC17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OliverCuisine.Infrastructure", "OliverCuisine.Infrastructure\OliverCuisine.Infrastructure.csproj", "{DA6CB349-693F-42C0-9844-1F4A01941CBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OliverCuisine.Server", "OliverCuisine.Server\OliverCuisine.Server.csproj", "{DA6CB349-693F-42C0-9844-1F4A01941CBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OliverCuisine.Shared", "OliverCuisine.Shared\OliverCuisine.Shared.csproj", "{6C9AF07A-5BD1-40D4-A9F6-DF1C03FBE36F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E5B60E7C-9649-446A-A86E-7DF22CA30821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +29,12 @@ Global
 		{DA6CB349-693F-42C0-9844-1F4A01941CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA6CB349-693F-42C0-9844-1F4A01941CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA6CB349-693F-42C0-9844-1F4A01941CBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9AF07A-5BD1-40D4-A9F6-DF1C03FBE36F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9AF07A-5BD1-40D4-A9F6-DF1C03FBE36F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9AF07A-5BD1-40D4-A9F6-DF1C03FBE36F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9AF07A-5BD1-40D4-A9F6-DF1C03FBE36F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

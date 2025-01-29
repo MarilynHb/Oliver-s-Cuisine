@@ -1,11 +1,10 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OliverCuisine.Core.Entities;
 
-namespace OliverCuisine.Infrastructure.Config;
+namespace OliverCuisine.Core.Config;
 
-public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
+public class RecipeEntityConfiguration : IEntityTypeConfiguration<Recipe>
 {
     public void Configure(EntityTypeBuilder<Recipe> builder)
     {

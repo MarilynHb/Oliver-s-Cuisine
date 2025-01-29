@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OliverCuisine.Infrastructure\OliverCuisine.Infrastructure.csproj" />
+    <ProjectReference Include="..\OliverCuisine.Server\OliverCuisine.Server.csproj" />
+    <ProjectReference Include="..\OliverCuisine.Shared\OliverCuisine.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,7 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OliverCuisine.Core.Entities;
-using OliverCuisine.Core.Interfaces;
-using OliverCuisine.Infrastructure.Data;
+using OliverCuisine.Shared;
+using OliverCuisine.Shared.Entities;
 
 namespace OliverCuisine.API.Controllers;
 
@@ -12,75 +10,74 @@ namespace OliverCuisine.API.Controllers;
 public class RecipesController : ControllerBase
 {
     #region  Controller
-    private IGenericRepository<Recipe> repository { get; }
-    public RecipesController(IGenericRepository<Recipe> repository)
+    private IRecipeService service { get; }
+    public RecipesController(IRecipeService recipe)
     {
-        this.repository = repository;
+        this.service = recipe;
     }
     #endregion
 
+    #region  Get
     [HttpGet]   
     public async Task<ActionResult<IReadOnlyList<Recipe>>> GetRecipes()
     {
-        return Ok(await repository.ListAllAsync());
+        return Ok(await service.GetRecipes());
     }
 
     [HttpGet("{id:long}")]
-    public async Task<ActionResult<Recipe>> GetRecipe(long id)
+    public async Task<ActionResult<RecipeDetail>> GetRecipe(long id)
     {
-        var recipe = await repository.GetByIdAsync(id);
+        var recipe = await service.GetRecipeByIdAsync(id);
         if (recipe == null)
         {
             return NotFound();
         }
         return recipe;
     }
-
+    #endregion
+    
+    #region Post
     [HttpPost]
-    public async Task<ActionResult<Recipe>> CreateRecipe([FromBody]Recipe recipe)
+    public async Task<ActionResult<Recipe>> CreateRecipe([FromBody]RecipeDetail recipe)
     {
-        repository.Add(recipe);
-        if(await repository.SaveAllAsync())
+        if(await service.AddRecipeAsync(recipe))
         {
             return CreatedAtAction(nameof(GetRecipe), new { id = recipe.Id }, recipe);
         }
         return BadRequest("Problem adding recipe");
     }
+    #endregion
 
+    #region Put
     [HttpPut("{id:long}")]
-    public async Task<ActionResult> UpdateRecipe(long id, Recipe recipe)
+    public async Task<ActionResult> UpdateRecipe(long id, RecipeDetail recipe)
     {
-        if (recipe.Id != id || !RecipeExists(id))
+        if (recipe.Id != id)
         {
             return BadRequest("Cannot update this recipe");
         }
-        repository.Update(recipe);
-        if (await repository.SaveAllAsync())
+        if (await service.UpdateRecipeAsync(recipe))
         {
             return NoContent();
         }
         return BadRequest("Problem updating recipe");
     }
+    #endregion
 
-    bool RecipeExists(long id)
-    {
-        return repository.Exists(id);
-    }
-
+    #region  Delete
     [HttpDelete("{id:long}")]
     public async Task<ActionResult> DeleteRecipe(long id)
     {
-        var recipe = await repository.GetByIdAsync(id);
+        var recipe = await service.GetRecipeByIdAsync(id);
         if (recipe == null)
         {
             return NotFound();
         }
-        repository.Delete(recipe);
-        if (await repository.SaveAllAsync())
+        if (await service.DeleteRecipeAsync(recipe.Id))
         {
             return NoContent();
         }
         return BadRequest("Problem deleting recipe");
     }
-
+    #endregion
 }

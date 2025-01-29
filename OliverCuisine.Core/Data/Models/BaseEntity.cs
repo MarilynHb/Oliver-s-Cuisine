@@ -1,5 +1,3 @@
-using System;
-
 namespace OliverCuisine.Core.Entities;
 
 public class BaseEntity

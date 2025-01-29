@@ -1,7 +1,7 @@
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
-using OliverCuisine.Core.Interfaces;
-using OliverCuisine.Infrastructure.Data;
+using OliverCuisine.Core.Data;
+using OliverCuisine.Server;
+using OliverCuisine.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +11,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddDbContext<StoreDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IStoreEntities>(provider => provider.GetRequiredService<StoreDbContext>());
+builder.Services.AddScoped<IRecipeService, RecipeService>();
 
 var app = builder.Build();
 
@@ -26,8 +26,11 @@ app.MapControllers();
 
 try
 {
-    var context = app.Services.GetRequiredService<StoreDbContext>();
-    context.Database.Migrate();
+     using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
+        context.Database.Migrate();
+    }
 }
 catch (Exception ex)
 {

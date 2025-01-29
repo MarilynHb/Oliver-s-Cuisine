@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace OliverCuisine.Infrastructure.Migrations
+namespace OliverCuisine.Core.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
