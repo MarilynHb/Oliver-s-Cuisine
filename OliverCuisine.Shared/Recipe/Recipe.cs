@@ -1,34 +1,27 @@
+using System.ComponentModel.DataAnnotations;
 using OliverCuisine.Core.Entities;
 
 namespace OliverCuisine.Shared.Entities;
 
 public record RecipeDetail
 {
-    public required long Id { get; set; }
-    public required string Name { get; set; }
-    public required string Description { get; set; }
-    public required int NumberOfServings {get; set;}
-    public required string Instructions { get; set; }
-    public required string ImageUrl { get; set; }
+    public long Id { get; set; } = default;
 
-    public void Validate()
-    {
-        if(string.IsNullOrEmpty(Name)){
-            throw new Exception("Name is required");
-        }
-        if(string.IsNullOrEmpty(Description)){
-            throw new Exception("Description is required");
-        }
-        if(NumberOfServings <= 0){
-            throw new Exception("Number of servings must be greater than 0");
-        }
-        if(string.IsNullOrEmpty(Instructions)){
-            throw new Exception("Instructions are required");
-        }
-        if(string.IsNullOrEmpty(ImageUrl)){
-            throw new Exception("Image URL is required");
-        }
-    }
+    [Required]
+    public required string Name { get; set; }
+    
+    [Required]
+    public required string Description { get; set; }
+    
+    [Required]
+    [Range(1, int.MaxValue, ErrorMessage = "Number of servings must be greater than 0")]
+    public required int NumberOfServings {get; set;}
+    
+    [Required]
+    public required string Instructions { get; set; }
+    
+    [Required]
+    public required string ImageUrl { get; set; }
 }
 
 public static partial class EntitiesToDtoExtensions

@@ -17,7 +17,6 @@ public class RecipeService : IRecipeService
     {
         try
         {
-            Recipe.Validate();
             var entity = Recipe.ToEntity();
             context.Add(entity);
             return await context.SaveAllAsync();
@@ -59,7 +58,6 @@ public class RecipeService : IRecipeService
     {
         try
         {
-            Recipe.Validate();
             var entity = Recipe.ToEntity();
             context.Update(entity);
             return await context.SaveAllAsync();
